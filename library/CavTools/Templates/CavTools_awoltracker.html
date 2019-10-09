@@ -47,6 +47,21 @@
         </table>
         <br><br>
     </xen:if>
+    <xen:if is="{$reserveBnMemberList}">
+        <h5>Reservists</h5>
+        <table>
+            <tr>
+                <th>Member</th>
+                <xen:if is="{$milpacsBoolean}"><th>Position</th></xen:if>
+                <th>Last Post</th>
+                <th>AWOL Since</th>
+                <th>Days AWOL</th>
+                <xen:if is="{$canSendPM}"><th>Action User</th></xen:if>
+            </tr>
+            {xen:raw $reserveMemberList}
+        </table>
+        <br><br>
+    </xen:if>
     <xen:if is="{$unsortedMemberList}">
         <h5>Unsorted</h5>
         <table>

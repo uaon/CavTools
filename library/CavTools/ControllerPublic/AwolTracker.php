@@ -54,20 +54,23 @@ class CavTools_ControllerPublic_AwolTracker extends XenForo_ControllerPublic_Abs
 		$voidIds			= XenForo_Application::get('options')->awolVoidIDs;
 		$ssIds 				= XenForo_Application::get('options')->awolSSIDs;
 		$firstBnIds			= XenForo_Application::get('options')->awolFirstBattIDs;
-		$secondBnIds 		= XenForo_Application::get('options')->awolSecondBattIDs;
+        $secondBnIds 		= XenForo_Application::get('options')->awolSecondBattIDs;
+        $reserveIds 		= XenForo_Application::get('options')->awolReserveIDs;
 
 		//Explode options from strings into arrays
 		$checkIds		= explode(',', $checkIds);
 		$voidIds 		= explode(',', $voidIds);
 		$ssIds 			= explode(',', $ssIds);
 		$firstBnIds		= explode(',', $firstBnIds);
-		$secondBnIds 	= explode(',', $secondBnIds);
+        $secondBnIds 	= explode(',', $secondBnIds);
+        $reserveIds 	= explode(',', $reserveIds);
 
 		//Define Variables
 		$ssMemberList = '';
 		$firstBnMemberList = '';
 		$secondBnMemberList = '';
-		$unsortedMemberList = '';
+        $unsortedMemberList = '';
+        $reserveMemberList = '';
 		$awolTime = ($daysTillInt * 86400);
 		$userUrl = '/members/';
 
@@ -113,7 +116,11 @@ class CavTools_ControllerPublic_AwolTracker extends XenForo_ControllerPublic_Abs
                         } elseif (count(array_intersect($ssIds, $memberIDs)) != 0) {
 
                             $ssMemberList .= "<tr><td><a href=" . $userUrl . $member['user_id'] . "><b>" . $member['username'] . "</b></a></td><td>" . $position . "</td><td>" . date('dMy', $memberLastPost) . "</td><td>" . date('dMy', $memberLastPost + $awolTime) . "</td><td>" . $daysAwol . " day(s)</td><td><input type=\"checkbox\" name=\"users[]\" value=" . $member['user_id'] . "></td></tr>" . PHP_EOL;
+                        
+                        } elseif (count(array_intersect($ssIds, $memberIDs)) != 0) {
 
+                            $reserveMemberList .= "<tr><td><a href=" . $userUrl . $member['user_id'] . "><b>" . $member['username'] . "</b></a></td><td>" . $position . "</td><td>" . date('dMy', $memberLastPost) . "</td><td>" . date('dMy', $memberLastPost + $awolTime) . "</td><td>" . $daysAwol . " day(s)</td><td><input type=\"checkbox\" name=\"users[]\" value=" . $member['user_id'] . "></td></tr>" . PHP_EOL;
+                        
                         } else {
 
                             $unsortedMemberList .= "<tr><td><a href=" . $userUrl . $member['user_id'] . "><b>" . $member['username'] . "</b></a></td><td>" . $position . "</td><td>" . date('dMy', $memberLastPost) . "</td><td>" . date('dMy', $memberLastPost + $awolTime) . "</td><td>" . $daysAwol . " day(s)</td><td><input type=\"checkbox\" name=\"users[]\" value=" . $member['user_id'] . "></td></tr>" . PHP_EOL;
@@ -135,7 +142,11 @@ class CavTools_ControllerPublic_AwolTracker extends XenForo_ControllerPublic_Abs
                         } elseif (count(array_intersect($ssIds, $memberIDs)) != 0) {
 
                             $ssMemberList .= "<tr><td><a href=" . $userUrl . $member['user_id'] . "><b>" . $member['username'] . "</b></a></td><td>" . date('dMy', $memberLastPost) . "</td><td>" . date('dMy', $memberLastPost + $awolTime) . "</td><td>" . $daysAwol . " day(s)</td><td><input type=\"checkbox\" name=\"users[]\" value=" . $member['user_id'] . "></td></tr>" . PHP_EOL;
+                        
+                        } elseif (count(array_intersect($reserveIds, $memberIDs)) != 0) {
 
+                            $reserveMemberList .= "<tr><td><a href=" . $userUrl . $member['user_id'] . "><b>" . $member['username'] . "</b></a></td><td>" . date('dMy', $memberLastPost) . "</td><td>" . date('dMy', $memberLastPost + $awolTime) . "</td><td>" . $daysAwol . " day(s)</td><td><input type=\"checkbox\" name=\"users[]\" value=" . $member['user_id'] . "></td></tr>" . PHP_EOL;
+                        
                         } else {
 
                             $unsortedMemberList .= "<tr><td><a href=" . $userUrl . $member['user_id'] . "><b>" . $member['username'] . "</b></a></td><td>" . date('dMy', $memberLastPost) . "</td><td>" . date('dMy', $memberLastPost + $awolTime) . "</td><td>" . $daysAwol . " day(s)</td><td><input type=\"checkbox\" name=\"users[]\" value=" . $member['user_id'] . "></td></tr>" . PHP_EOL;
@@ -164,7 +175,11 @@ class CavTools_ControllerPublic_AwolTracker extends XenForo_ControllerPublic_Abs
                         } elseif (count(array_intersect($ssIds, $memberIDs)) != 0) {
 
                             $ssMemberList .= "<tr><td><a href=" . $userUrl . $member['user_id'] . "><b>" . $member['username'] . "</b></a></td><td>" . $position . "</td><td>" . date('dMy', $memberLastPost) . "</td><td>" . date('dMy', $memberLastPost + $awolTime) . "</td><td>" . $daysAwol . " day(s)</td></tr>" . PHP_EOL;
+                        
+                        } elseif (count(array_intersect($ssIds, $memberIDs)) != 0) {
 
+                            $reserveMemberList .= "<tr><td><a href=" . $userUrl . $member['user_id'] . "><b>" . $member['username'] . "</b></a></td><td>" . $position . "</td><td>" . date('dMy', $memberLastPost) . "</td><td>" . date('dMy', $memberLastPost + $awolTime) . "</td><td>" . $daysAwol . " day(s)</td></tr>" . PHP_EOL;
+                        
                         } else {
 
                             $unsortedMemberList .= "<tr><td><a href=" . $userUrl . $member['user_id'] . "><b>" . $member['username'] . "</b></a></td><td>" . $position . "</td><td>" . date('dMy', $memberLastPost) . "</td><td>" . date('dMy', $memberLastPost + $awolTime) . "</td><td>" . $daysAwol . " day(s)</td></tr>" . PHP_EOL;
@@ -186,7 +201,11 @@ class CavTools_ControllerPublic_AwolTracker extends XenForo_ControllerPublic_Abs
                         } elseif (count(array_intersect($ssIds, $memberIDs)) != 0) {
 
                             $ssMemberList .= "<tr><td><a href=" . $userUrl . $member['user_id'] . "><b>" . $member['username'] . "</b></a></td><td>" . date('dMy', $memberLastPost) . "</td><td>" . date('dMy', $memberLastPost + $awolTime) . "</td><td>" . $daysAwol . " day(s)</td></tr>" . PHP_EOL;
+                        
+                        } elseif (count(array_intersect($ssIds, $memberIDs)) != 0) {
 
+                            $reserveMemberList .= "<tr><td><a href=" . $userUrl . $member['user_id'] . "><b>" . $member['username'] . "</b></a></td><td>" . date('dMy', $memberLastPost) . "</td><td>" . date('dMy', $memberLastPost + $awolTime) . "</td><td>" . $daysAwol . " day(s)</td></tr>" . PHP_EOL;
+                        
                         } else {
 
                             $unsortedMemberList .= "<tr><td><a href=" . $userUrl . $member['user_id'] . "><b>" . $member['username'] . "</b></a></td><td>" . date('dMy', $memberLastPost) . "</td><td>" . date('dMy', $memberLastPost + $awolTime) . "</td><td>" . $daysAwol . " day(s)</td></tr>" . PHP_EOL;
@@ -204,7 +223,8 @@ class CavTools_ControllerPublic_AwolTracker extends XenForo_ControllerPublic_Abs
 			'milpacsBoolean' => $milpacsBoolean,
 			'ssMemberList' => $ssMemberList,
 			'firstBnMemberList' => $firstBnMemberList,
-			'secondBnMemberList' => $secondBnMemberList,
+            'secondBnMemberList' => $secondBnMemberList,
+            'reserveMemberList' => $reserveMemberList,
 			'unsortedMemberList' => $unsortedMemberList,
             'canSendPM' => $canSendPM
 		);
@@ -359,7 +379,8 @@ class CavTools_ControllerPublic_AwolTracker extends XenForo_ControllerPublic_Abs
         {
             case '1': $title = "1st Battalion AWOL's | " . date('d M Y'); break;
             case '2': $title = "2nd Battalion AWOL's | " . date('d M Y'); break;
-            case '3': $title = "Regimental AWOL's | " . date('d M Y'); break;
+            case '3': $title = "Reserve AWOL's | " . date('d M Y'); break;
+            case '4': $title = "Regimental AWOL's | " . date('d M Y'); break;
             default: $title = "Regimental AWOL's | " . date('d M Y'); break;
         }
 
@@ -383,7 +404,8 @@ class CavTools_ControllerPublic_AwolTracker extends XenForo_ControllerPublic_Abs
         {
             case '1': $title = "1st Battalion AWOL Discharges | " . date('d M Y'); break;
             case '2': $title = "2nd Battalion AWOL Discharges | " . date('d M Y'); break;
-            case '3': $title = "Regimental AWOL Discharges | " . date('d M Y'); break;
+            case '3': $title = "Reservist AWOL Discharges | " . date('d M Y'); break;
+            case '4': $title = "Regimental AWOL Discharges | " . date('d M Y'); break;
             default: $title = "Regimental AWOL Discharges | " . date('d M Y'); break;
         }
 
